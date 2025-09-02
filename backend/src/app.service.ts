@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Word } from './database/entities/word.entity';
 import { Repository } from 'typeorm';
-import axios from 'axios';
+import { Ollama } from 'ollama';
 
 @Injectable()
 export class AppService {
-  private readonly API_URL = 'http://127.0.0.1:1234/v1/chat/completions';
+  ollamaClient = new Ollama({ host: 'http://127.0.0.1:1234' });
 
   constructor(
     @InjectRepository(Word) private wordRepository: Repository<Word>,
@@ -31,20 +31,14 @@ export class AppService {
     console.log('Prompt for model:', prompt);
 
     try {
-      const res = await axios.post(this.API_URL, {
-        model: 'deepseek-r1:1.5b',
-        messages: [
-          {
-            role: 'system',
-            content:
-              'Respond with a JSON object without any thinking process containing:',
-          },
-          { role: 'user', content: prompt },
-        ],
-        stream: false,
+      const response = await this.ollamaClient.generate({
+        model: 'deepseek-r1:latest',
+        prompt,
+        system: 'You are a helpful assistant that detects profanity in text.',
       });
+      console.log({ response });
 
-      const raw = res.data.choices[0].message.content;
+      const raw = response.response;
       const data = JSON.parse(
         raw.substring(raw.indexOf('</think>') + 9).trim(),
       );
