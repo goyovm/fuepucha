@@ -32,7 +32,7 @@ export class AppService {
 
     try {
       const res = await axios.post(this.API_URL, {
-        model: 'model',
+        model: 'deepseek-r1:1.5b',
         messages: [
           {
             role: 'system',
@@ -41,10 +41,7 @@ export class AppService {
           },
           { role: 'user', content: prompt },
         ],
-        temperature: 0.7,
-        max_tokens: -1,
         stream: false,
-        chat_template_kwargs: { enable_thinking: false },
       });
 
       const raw = res.data.choices[0].message.content;
