@@ -39,9 +39,7 @@ export class AppService {
       console.log({ response });
 
       const raw = response.response;
-      const data = JSON.parse(
-        raw.substring(raw.indexOf('</think>') + 9).trim(),
-      );
+      const data = JSON.parse(raw.substring(raw.indexOf('```') + 4).trim());
       return {
         codeStatus: 200,
         message: 'Text analyzed successfully',
