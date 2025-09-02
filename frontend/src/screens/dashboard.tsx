@@ -2,6 +2,8 @@ import { useState } from 'react';
 import {MdOutlineSecurity} from 'react-icons/md';
 import { BiAngry, BiHappy } from "react-icons/bi";
 import { CiBoxList } from "react-icons/ci";
+import { AiOutlineLoading } from "react-icons/ai";
+
 
 import config from '../config';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +17,7 @@ type AnalyzeResult = {
 const DashboardScreen = () => {
 
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState('');
   const [result, setResult] = useState<AnalyzeResult | null>(null);
 
@@ -25,6 +28,7 @@ const DashboardScreen = () => {
   const handleAnalyze = () => {
     if (text !== '') {
       setResult(null);
+      setLoading(true);
       fetch(config.apiUrl + '/analyze', {
         method: 'POST',
         headers: {
@@ -34,11 +38,15 @@ const DashboardScreen = () => {
       })
         .then((response) => response.json())
         .then((data) => {
+          setLoading(false);
           if (data.codeStatus === 200) {
             setResult(data.result);
           } else {
             setResult(null);
           }
+        }).catch((error) => {
+          setLoading(false);
+          console.error('Error analyzing text:', { error });
         });
     }
   }
@@ -62,7 +70,7 @@ const DashboardScreen = () => {
         <div className='flex flex-col mt-10 w-full'>
           <textarea value={text} onChange={(e) => setText(e.target.value)} className='w-full p-2 border border-gray-300 rounded' rows={4} placeholder='Enter text to analyze...'></textarea>
           <button onClick={handleAnalyze} className='mt-2 w-full bg-primary text-white p-2 rounded cursor-pointer'>
-            Analyze
+            Analyze {loading && <AiOutlineLoading className='animate-spin inline-block ml-2' />}
           </button>
         </div>
         {result && (
@@ -82,17 +90,26 @@ const DashboardScreen = () => {
                   </div>)}
                 </div>
               </div>
-              <div className='mt-2 border-b border-gray-200 py-2 flex flex-row justify-between items-center'>
+              {result.hasProfanity &&<div className='mt-2 border-b border-gray-200 py-2 flex flex-row justify-between items-center'>
                 <div>
                 Severity
                 </div>
                 <div>
                   {result.severity}
                 </div>
-              </div>
+              </div>}
+              {result.hasProfanity && <div className='mt-2 border-b border-gray-200 py-2 flex flex-row justify-between items-center'>
+                <div>
+                  Severity
+                </div>
+                <div>
+                  {result.severity}
+                </div>
+              </div>}
               <div className='mt-2 pt-2 flex flex-row justify-between items-center'>
                 <div>
-                Masked Text</div>
+                  Masked Text
+                </div>
                 <div>{result.maskedText}</div>
               </div>
             </div>
