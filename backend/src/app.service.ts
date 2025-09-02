@@ -26,7 +26,7 @@ export class AppService {
     ${blackList !== '' ? `Also consider this list of words that are not allowed: ${blackList}` : ''}
     Respond with a JSON object without any thinking process containing:
     - profanity: true/false
-    - severity: low/medium/high
+    - severity: 1..5 been 1 a low offense and 5 a high offense
     - masked_text: the input text with profanity masked`;
     console.log('Prompt for model:', prompt);
 
