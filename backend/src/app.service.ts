@@ -39,7 +39,7 @@ export class AppService {
       console.log({ response });
 
       const raw = response.response;
-      if (!raw || !raw.includes('{')) {
+      if (raw && raw.includes('{')) {
         const data = JSON.parse(raw.substring(raw.indexOf('{') - 1).trim());
         return {
           codeStatus: 200,
