@@ -11,5 +11,8 @@
     "stop-db": "cd database && docker-compose down",
     "start-frontend": "cd frontend && npm start",
     "start-backend": "cd backend && npm run dev"
+  },
+    "engines": {
+    "node": ">=22.0.0"
   }
 }
