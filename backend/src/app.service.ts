@@ -32,7 +32,7 @@ export class AppService {
 
     try {
       const response = await this.ollamaClient.generate({
-        model: 'llama3.1:8b',
+        model: 'qwen3:8b',
         prompt,
         system: 'You are a helpful assistant that detects profanity in text.',
       });
