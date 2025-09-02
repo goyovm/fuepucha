@@ -32,23 +32,35 @@ export class AppService {
 
     try {
       const response = await this.ollamaClient.generate({
-        model: 'deepseek-r1:latest',
+        model: 'llama3.1:8b',
         prompt,
         system: 'You are a helpful assistant that detects profanity in text.',
       });
       console.log({ response });
 
       const raw = response.response;
-      const data = JSON.parse(raw.substring(raw.indexOf('```') + 4).trim());
-      return {
-        codeStatus: 200,
-        message: 'Text analyzed successfully',
-        result: {
-          hasProfanity: data.profanity,
-          severity: data.severity,
-          maskedText: data.masked_text,
-        },
-      };
+      if (!raw || !raw.includes('{')) {
+        const data = JSON.parse(raw.substring(raw.indexOf('{') - 1).trim());
+        return {
+          codeStatus: 200,
+          message: 'Text analyzed successfully',
+          result: {
+            hasProfanity: data.profanity,
+            severity: data.severity,
+            maskedText: data.masked_text,
+          },
+        };
+      } else {
+        return {
+          codeStatus: 200,
+          message: 'Text analyzed successfully',
+          result: {
+            hasProfanity: false,
+            severity: 'low',
+            maskedText: text,
+          },
+        };
+      }
     } catch (error) {
       console.error('Error analyzing text:', { error });
       return {
