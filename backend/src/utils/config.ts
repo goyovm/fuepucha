@@ -1,9 +1,11 @@
+const dev = true;
+
 const conf = {
-  dev: process.env.NODE_ENV !== 'production',
+  dev,
   swaggerPath: '/docs',
   database: {
     host: 'localhost',
-    port: 3300,
+    port: dev ? 3300 : 3306,
     username: 'user',
     password: 'userpassword',
     name: 'mydatabase',
