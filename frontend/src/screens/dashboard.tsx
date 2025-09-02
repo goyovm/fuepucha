@@ -51,6 +51,23 @@ const DashboardScreen = () => {
     }
   }
 
+  const getSeverity = (level: number) => {
+    switch (level) {
+      case 1:
+        return <span className='text-green-500'>Low (1)</span>;
+      case 2:
+        return <span className='text-yellow-500'>Medium (2)</span>;
+      case 3:
+        return <span className='text-orange-500'>High (3)</span>;
+      case 4:
+        return <span className='text-red-500'>Very High (4)</span>;
+      case 5:
+        return <span className='text-red-800 font-bold'>Extreme (5)</span>;
+      default:
+        return '-';
+    }
+  };
+
   return (
     <div className='flex min-h-screen bg-gray-100 justify-center w-full'>
       <div className='flex flex-col max-w-[800px] items-center min-h-screen w-full font-inter p-4'>
@@ -90,20 +107,12 @@ const DashboardScreen = () => {
                   </div>)}
                 </div>
               </div>
-              {result.hasProfanity &&<div className='mt-2 border-b border-gray-200 py-2 flex flex-row justify-between items-center'>
-                <div>
-                Severity
-                </div>
-                <div>
-                  {result.severity}
-                </div>
-              </div>}
               {result.hasProfanity && <div className='mt-2 border-b border-gray-200 py-2 flex flex-row justify-between items-center'>
                 <div>
                   Severity
                 </div>
                 <div>
-                  {result.severity}
+                  {getSeverity(result.severity)}
                 </div>
               </div>}
               <div className='mt-2 pt-2 flex flex-row justify-between items-center'>
