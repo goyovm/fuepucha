@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {MdOutlineSecurity} from 'react-icons/md';
 import { BiAngry, BiHappy } from "react-icons/bi";
 import { CiBoxList } from "react-icons/ci";
-import { AiFillGithub, AiOutlineLoading } from "react-icons/ai";
+import { AiOutlineLoading } from "react-icons/ai";
 
 
 import config from '../config';
