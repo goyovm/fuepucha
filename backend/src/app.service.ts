@@ -43,7 +43,7 @@ export class AppService {
         const data = JSON.parse(raw.substring(raw.indexOf('{') - 1).trim());
         return {
           codeStatus: 200,
-          message: 'Text analyzed successfully',
+          responseLLM: raw,
           result: {
             hasProfanity: data.profanity,
             severity: data.severity,
@@ -53,7 +53,7 @@ export class AppService {
       } else {
         return {
           codeStatus: 200,
-          message: 'Text analyzed successfully',
+          responseLLM: raw,
           result: {
             hasProfanity: false,
             severity: 'low',
