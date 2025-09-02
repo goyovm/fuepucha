@@ -2,11 +2,12 @@ import { useState } from 'react';
 import {MdOutlineSecurity} from 'react-icons/md';
 import { BiAngry, BiHappy } from "react-icons/bi";
 import { CiBoxList } from "react-icons/ci";
-import { AiOutlineLoading } from "react-icons/ai";
+import { AiFillGithub, AiOutlineLoading } from "react-icons/ai";
 
 
 import config from '../config';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 
 type AnalyzeResult = {
   hasProfanity: boolean;
@@ -125,6 +126,7 @@ const DashboardScreen = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   )
 }

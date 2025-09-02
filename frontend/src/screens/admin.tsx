@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 import config from "../config";
+import Footer from "./Footer";
 
 const AdminPanel = () => {
 
@@ -128,6 +129,7 @@ const AdminPanel = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
